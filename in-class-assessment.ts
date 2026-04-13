@@ -150,8 +150,30 @@ app.get("/api/movies", async (req: Request, res: Response) => {
 // ============================================================================
 
 // YOUR CODE HERE
+app.get("/api/movies/:id", async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
 
+    // Validate ObjectId
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
 
+    const movie = await moviesCollection.findOne({
+      _id: new ObjectId(id),
+    });
+
+    // If not found
+    if (!movie) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+
+    // If found
+    res.status(200).json(movie);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching movie", error });
+  }
+});
 // ============================================================================
 // TODO #7: POST /api/movies - Create New Movie (1 mark)
 // Create a POST endpoint that:
