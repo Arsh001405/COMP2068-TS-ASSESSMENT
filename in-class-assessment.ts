@@ -60,6 +60,13 @@ import dotenv from "dotenv";
 // ============================================================================
 
 // YOUR CODE HERE
+interface Movie {
+  _id?: ObjectId;
+  title: string;
+  director: string;
+  year: number;
+  rating: number;
+}
 
 
 // ============================================================================
