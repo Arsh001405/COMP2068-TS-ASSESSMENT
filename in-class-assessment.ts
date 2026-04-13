@@ -86,7 +86,7 @@ const port = 5000;
 app.use(express.json());
 
 // Global collection variable
-let moviesCollection: Collection<Movie>;
+let moviesCollection!: Collection<Movie>;
 
 
 // ============================================================================
@@ -130,7 +130,14 @@ async function connectToDatabase(): Promise<Collection<Movie>> {
 // ============================================================================
 
 // YOUR CODE HERE
-
+app.get("/api/movies", async (req: Request, res: Response) => {
+  try {
+    const movies = await moviesCollection.find({}).toArray();
+    res.status(200).json(movies);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching movies", error });
+  }
+});
 
 // ============================================================================
 // TODO #6: GET /api/movies/:id - Get Movie by ID (1 mark)
