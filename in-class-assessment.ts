@@ -78,6 +78,15 @@ interface Movie {
 // ============================================================================
 
 // YOUR CODE HERE
+dotenv.config();
+
+const app = express();
+const port = 5000;
+
+app.use(express.json());
+
+// Global collection variable
+let moviesCollection: Collection<Movie>;
 
 
 // ============================================================================
