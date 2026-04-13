@@ -243,6 +243,23 @@ app.put("/api/movies/:id", async (req: Request, res: Response) => {
 
 // YOUR CODE HERE
 
+app.delete("/api/movies/:id", async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id as string; // ✅ fix
+
+    const result = await moviesCollection.deleteOne({
+      _id: new ObjectId(id),
+    });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+
+    return res.status(200).json({ message: "Movie deleted" });
+  } catch (error) {
+    return res.status(500).json({ message: "Error deleting movie" });
+  }
+});
 
 // ============================================================================
 // TODO #10: Start Server with Database Connection (1 mark)
