@@ -100,6 +100,25 @@ let moviesCollection: Collection<Movie>;
 // ============================================================================
 
 // YOUR CODE HERE
+async function connectToDatabase(): Promise<Collection<Movie>> {
+  const connString = process.env.DB_CONN_STRING;
+  const dbName = process.env.DB_NAME;
+  const collectionName = process.env.COLLECTION_NAME;
+
+  if (!connString || !dbName || !collectionName) {
+    throw new Error("Missing environment variables");
+  }
+
+  const client = new MongoClient(connString);
+  await client.connect();
+
+  const db: Db = client.db(dbName);
+  const collection: Collection<Movie> = db.collection(collectionName);
+
+  console.log(`Connected to DB: ${dbName}, Collection: ${collectionName}`);
+
+  return collection;
+}
 
 
 // ============================================================================
