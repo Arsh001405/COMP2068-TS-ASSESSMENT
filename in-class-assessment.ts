@@ -211,7 +211,25 @@ app.post("/api/movies", async (req: Request, res: Response) => {
 // ============================================================================
 
 // YOUR CODE HERE
+app.put("/api/movies/:id", async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const updateData = req.body;
 
+    const result = await moviesCollection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: updateData }
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+
+    res.status(200).json({ message: "Movie updated" });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating movie", error });
+  }
+});
 
 // ============================================================================
 // TODO #9: DELETE /api/movies/:id - Delete Movie (1 mark)
