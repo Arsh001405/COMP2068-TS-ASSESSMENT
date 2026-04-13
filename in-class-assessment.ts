@@ -206,7 +206,7 @@ app.post("/api/movies", async (req: Request, res: Response) => {
 // YOUR CODE HERE
 app.put("/api/movies/:id", async (req: Request, res: Response) => {
   try {
-    const id = req.params.id as string; // ✅ fix
+    const id = req.params.id as string; // fix
 
     const updateData = req.body;
 
@@ -239,7 +239,7 @@ app.put("/api/movies/:id", async (req: Request, res: Response) => {
 
 app.delete("/api/movies/:id", async (req: Request, res: Response) => {
   try {
-    const id = req.params.id as string; // ✅ fix
+    const id = req.params.id as string; // fix
 
     const result = await moviesCollection.deleteOne({
       _id: new ObjectId(id),
