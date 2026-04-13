@@ -185,7 +185,20 @@ app.get("/api/movies/:id", async (req: Request, res: Response) => {
 // ============================================================================
 
 // YOUR CODE HERE
+app.post("/api/movies", async (req: Request, res: Response) => {
+  try {
+    const movie: Movie = req.body;
 
+    const result = await moviesCollection.insertOne(movie);
+
+    res.status(201).json({
+      message: "Movie created",
+      id: result.insertedId,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error creating movie", error });
+  }
+});
 
 // ============================================================================
 // TODO #8: PUT /api/movies/:id - Update Movie (1 mark)
